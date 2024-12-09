@@ -21,13 +21,13 @@ const MessageBubble = ({ message }: MessageBubbleProps) => {
       >
         <div className="flex items-start">
           {message.sender === ESenderType.ASSISTANT && (
-            <div className="h-min p-2 bg-interface rounded-full mr-1">
+            <div className="h-min p-2 bg-primary rounded-full mr-1">
               <Sparkles color="white" size={18} />
             </div>
           )}
           <div
             className={`px-2 py-2 rounded-lg ${
-              isUser ? "bg-interface text-white" : "text-black "
+              isUser ? "bg-primary text-white" : "text-black "
             }`}
           >
             <Markdown>{message.content}</Markdown>

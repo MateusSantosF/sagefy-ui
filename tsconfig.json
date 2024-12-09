@@ -19,11 +19,13 @@
       }
     ],
     "paths": {
-      "@shared/components/*": ["./src/shared/components*"],	
-      "@shared/contexts/*": ["./src/shared/contexts*"],	
-      "@shared/utils/*": ["./src/shared/utils*"],	
-      "@shared/hooks/*": ["./src/shared/hooks*"],	
-      "@shared/interfaces/*": ["./src/shared/interfaces*"],	
+      "@shared/components/*": ["./src/shared/components/*"],	
+      "@shared/components/ui*": ["./src/shared/components/ui*"],	
+      "@shared/contexts/*": ["./src/shared/contexts/*"],	
+      "@shared/utils/*": ["./src/shared/utils/*"],	
+      "@shared/hooks/*": ["./src/shared/hooks/*"],	
+      "@shared/interfaces/*": ["./src/shared/interfaces/*"],	
+      "@modules/*": ["./src/modules/*"],	
       "@/*": ["./src/*"],
     }
   },

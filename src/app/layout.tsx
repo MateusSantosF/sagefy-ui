@@ -15,8 +15,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "RAGEd",
-  description: "RAGEd - RAGEd chatbot",
+  title: "Sagefy",
+  description: "Sagefy",
 };
 
 export default function RootLayout({

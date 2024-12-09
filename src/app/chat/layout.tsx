@@ -1,10 +1,17 @@
-import { InterfacePropsProvider } from "@/shared/contexts/InterfacePropsContext";
+import { Metadata } from "next";
 import { Suspense } from "react";
+
+
+export const metadata: Metadata = {
+  title: "Chat - Sagefy",
+  description: "Sagefy",
+};
+
 
 function Layout({ children }: React.PropsWithChildren) {
   return (
     <Suspense>
-      <InterfacePropsProvider>{children}</InterfacePropsProvider>
+      {children}
     </Suspense>
   );
 }

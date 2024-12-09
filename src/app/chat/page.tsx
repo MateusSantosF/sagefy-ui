@@ -6,11 +6,8 @@ import { Header } from "@/shared/components/Header";
 import MessageBubble from "@/shared/components/MessageBubble";
 import { MessageBubbleSkeleton } from "@/shared/components/MessageBubbleSkeleton";
 import ScrollToBottomButton from "@/shared/components/ScrollToBottomButton";
-import { useUserMetadata } from "@/shared/contexts/UserMetadataContext";
 import { useChatMessages } from "@/shared/hooks/useChatMessages";
 import { ESenderType } from "@/shared/interfaces/Message";
-import { ISentMessageRequest } from "@/shared/interfaces/Requests";
-import { parseToInterface } from "@/shared/utils/parse-to-interface";
 import { useEffect, useRef, useState } from "react";
 import { sentMessage } from "../actions";
 import { v4 as uuidv4 } from "uuid";
@@ -19,7 +16,6 @@ const ChatPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { messages, history, addMessage, addHistory } = useChatMessages();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const { metadata } = useUserMetadata();
 
   const scrollToBottom = () => {
     if (scrollContainerRef.current) {
@@ -34,13 +30,12 @@ const ChatPage = () => {
     setIsLoading(true);
     addMessage({ content: message, sender: ESenderType.USER, id: uuidv4() });
 
-    const parsedMetadata = parseToInterface<ISentMessageRequest>(metadata, {});
-
     try {
-      parsedMetadata.prompt = message;
-      parsedMetadata.origin = origin || "NOT_DEFINIED";
-      parsedMetadata.history = history;
-      const response = await sentMessage(parsedMetadata);
+      const response = await sentMessage({
+        prompt: message,
+        origin: "chat",
+        history: history,
+      });
       if (!response) {
         return;
       }
@@ -66,7 +61,7 @@ const ChatPage = () => {
       <Header />
       <div
         ref={scrollContainerRef}
-        className="flex-1 flex w-full gap-6 flex-col items-center overflow-y-auto px-4"
+        className="flex-1 flex w-full max-h-screen gap-6 flex-col items-center overflow-y-auto px-4"
       >
         <div className="container max-w-6xl">
           {messages.map((msg, index) => (

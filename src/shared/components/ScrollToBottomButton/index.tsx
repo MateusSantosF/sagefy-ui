@@ -48,7 +48,7 @@ const ScrollToBottomButton: React.FC<{
       {showButton && (
         <button
           onClick={scrollToBottom}
-          className="fixed bottom-10 z-40 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-interface text-white p-2 rounded-full shadow-lg"
+          className="fixed bottom-10 z-40 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-primary text-white p-2 rounded-full shadow-lg"
         >
           <ArrowDown />
         </button>

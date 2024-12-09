@@ -1,5 +1,3 @@
-import { useInterfaceProps } from "@/shared/contexts/InterfacePropsContext";
-import { getTextColor } from "@/shared/utils/getTextColor";
 import React, { useState } from "react";
 import Disclaimer from "../Disclaimer";
 
@@ -10,9 +8,7 @@ type ChatInputProps = {
 
 const ChatInput = ({ onSend, loading = false }: ChatInputProps) => {
   const [message, setMessage] = useState("");
-  const { color } = useInterfaceProps();
 
-  const textColor = getTextColor(color);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,7 +32,7 @@ const ChatInput = ({ onSend, loading = false }: ChatInputProps) => {
           className={`!absolute right-6 top-[6px] z-10 select-none rounded py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase shadow-md transition-all focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none ${
             message.trim() === ""
               ? `bg-gray-300 text-gray-600 cursor-not-allowed`
-              : `bg-interface ${textColor} shadow-interface/80 hover:shadow-lg hover:shadow-interface`
+              : `bg-primary text-white shadow-primary/80 hover:shadow-lg hover:shadow-primary`
           }`}
           type="submit"
         >

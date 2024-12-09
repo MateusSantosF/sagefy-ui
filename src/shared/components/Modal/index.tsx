@@ -40,13 +40,13 @@ const Modal: React.FC<ModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-opacity-50"
       onClick={handleCloseClick}
       onKeyDown={handleKeyDown}
     >
-      <div className="bg-white p-4 min-w-md rounded shadow-lg w-3/4 md:w-2/3 lg:w-2/4">
+      <div className="bg-primary p-4 min-w-md rounded shadow-lg w-3/4 md:w-2/3 lg:w-2/4">
         <header data-modal-header className="flex justify-between pb-6">
-          <h2 className="font-medium text-lg">{title}</h2>
+          <h2 className="font-medium text-lg ">{title}</h2>
           <button data-modal-close onClick={handleCloseClick}>
             <X className="w-full h-full" onClick={handleCloseClick} />
           </button>
@@ -60,13 +60,13 @@ const Modal: React.FC<ModalProps> = ({
             <button
               data-modal-cancel
               onClick={handleCloseClick}
-              className="text-gray-500 w-full hover:bg-gray-200 px-4 py-2 rounded"
+              className="text-black w-full hover:bg-muted-foreground px-4 py-2 rounded"
             >
               {footer?.cancelText ?? "Cancelar"}
             </button>
 
             <button
-              className="bg-interface brightness-100 hover:brightness-95 text-white px-4 py-2 rounded w-full"
+              className="bg-secondary brightness-100 hover:brightness-95  px-4 py-2 rounded w-full"
               data-modal-confirm
               onClick={handleConfirmClick}
               data-type="confirm"
