@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { sentFeedback } from "@/app/actions";
 import { useChatMessages } from "@/shared/hooks/useChatMessages";
 import { ThumbsDown, ThumbsUp } from "lucide-react";
 import Modal from "../Modal";
+import { sentFeedback } from "@modules/auth/actions/SentFeedback";
 
 type FeedbackProps = {
   messageId: string;

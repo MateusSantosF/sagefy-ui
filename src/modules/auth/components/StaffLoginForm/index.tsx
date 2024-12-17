@@ -1,18 +1,39 @@
-import { Button } from '@shared/components//ui/button'
-import { Input } from '@shared/components//ui/input'
-import { Label } from '@shared/components//ui/label'
-import { useState } from 'react'
-
+import { useToast } from "@/hooks/use-toast";
+import { staftAuth } from "@modules/auth/actions/StaffAuth";
+import { Button } from "@shared/components//ui/button";
+import { Input } from "@shared/components//ui/input";
+import { Label } from "@shared/components//ui/label";
+import { useAuth } from "@shared/contexts/auth.context";
+import { LoaderCircle } from "lucide-react";
+import { useState } from "react";
 
 export default function StaffLoginForm() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { setUserByCookies } = useAuth();
+  const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Aqui você implementaria a lógica de login para professores/admin
-    console.log('Staff login:', { email, password })
-  }
+  const handleSubmit = async (e: React.FormEvent) => {
+    try {
+      e.preventDefault();
+      setIsLoading(true);
+      await staftAuth({
+        email: email,
+        password: password,
+      });
+      setUserByCookies();
+      window.location.assign(new URL("/chat", window.location.href));
+    } catch (err) {
+      toast({
+        title: "Erro",
+        description: "Erro ao fazer login",
+      });
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 mt-4">
@@ -38,8 +59,10 @@ export default function StaffLoginForm() {
           required
         />
       </div>
-      <Button type="submit" className="w-full">Entrar como Professor/Admin</Button>
+      <Button type="submit" className="w-full">
+        {isLoading ? <LoaderCircle /> : null}
+        {isLoading ? "Entrando..." : "Entrar como Professor/Admin"}
+      </Button>
     </form>
-  )
+  );
 }
-

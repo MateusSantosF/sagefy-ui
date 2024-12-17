@@ -5,16 +5,18 @@ import { Label } from "@shared/components/ui/label";
 import { studentAuth } from "@modules/auth/actions/StudentAuth";
 import { useAuth } from "@shared/contexts/auth.context";
 import { useToast } from "@/hooks/use-toast";
+import { LoaderCircle } from "lucide-react";
 
 export default function StudentLoginForm() {
   const [email, setEmail] = useState("");
   const [accessCode, setAccessCode] = useState("");
   const { setUserByCookies } = useAuth();
   const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    setIsLoading(true);
     try {
       await studentAuth({
         email,
@@ -28,6 +30,8 @@ export default function StudentLoginForm() {
         description: "Erro ao fazer login",
       });
       console.error(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -56,7 +60,8 @@ export default function StudentLoginForm() {
         />
       </div>
       <Button type="submit" className="w-full">
-        Entrar como Aluno
+        {isLoading ? <LoaderCircle /> : null}
+        {isLoading ? "Entrando..." : "Entrar como Aluno"}
       </Button>
     </form>
   );

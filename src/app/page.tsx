@@ -17,7 +17,7 @@ export default function LoginPage() {
   const [activeTab, setActiveTab] = useState<"student" | "staff">("student");
 
   return (
-    <div className="h-screen flex flex-col items-center bg-primary justify-center">
+    <div className="h-screen flex flex-col items-center justify-center">
       <SagefyLogo />
 
       <div className="w-full flex items-center justify-center p-8">

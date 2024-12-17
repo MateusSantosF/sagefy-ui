@@ -8,8 +8,8 @@ import { MessageBubbleSkeleton } from "@/shared/components/MessageBubbleSkeleton
 import ScrollToBottomButton from "@/shared/components/ScrollToBottomButton";
 import { useChatMessages } from "@/shared/hooks/useChatMessages";
 import { ESenderType } from "@/shared/interfaces/Message";
+import { sentMessage } from "@modules/auth/actions/SentMessage";
 import { useEffect, useRef, useState } from "react";
-import { sentMessage } from "../actions";
 import { v4 as uuidv4 } from "uuid";
 
 const ChatPage = () => {

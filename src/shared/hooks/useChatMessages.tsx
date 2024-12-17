@@ -31,7 +31,7 @@ export const ChatMessagesProvider = ({ children }: { children: ReactNode }) => {
   const [history, setHistory] = useState<IMessage[]>([]);
 
   useEffect(() => {
-    const savedMessages = localStorage.getItem(LOCAL_STORAGE_KEY);
+    const savedMessages = sessionStorage.getItem(LOCAL_STORAGE_KEY);
     if (savedMessages) {
       const parsedMessages: IMessage[] = JSON.parse(savedMessages);
       setMessages(parsedMessages);
@@ -44,7 +44,7 @@ export const ChatMessagesProvider = ({ children }: { children: ReactNode }) => {
       const trimmedMessages = messages.slice(-MAX_MESSAGES);
       setMessages(trimmedMessages);
     } else {
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(messages));
+      sessionStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(messages));
     }
   }, [messages]);
 
@@ -73,7 +73,7 @@ export const ChatMessagesProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const clearMessages = () => {
-    localStorage.removeItem(LOCAL_STORAGE_KEY);
+    sessionStorage.removeItem(LOCAL_STORAGE_KEY);
     setMessages([]);
   };
 
