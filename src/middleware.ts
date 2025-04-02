@@ -4,7 +4,6 @@ import { decodeJwt } from "@shared/utils/decode-jwt";
 import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(request: NextRequest) {
-  console.log("Middleware: ", request.nextUrl.pathname);
   if (request.nextUrl.pathname === "/") {
     return NextResponse.next();
   }
