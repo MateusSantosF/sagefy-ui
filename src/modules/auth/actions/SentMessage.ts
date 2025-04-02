@@ -1,5 +1,3 @@
-"use server";
-
 import { axiosWithInterceptor } from "@/configs/axios-with-interceptor";
 import {
   ISentMessageRequest,

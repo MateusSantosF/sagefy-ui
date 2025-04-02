@@ -10,6 +10,10 @@ type MessageBubbleProps = {
 const MessageBubble = ({ message }: MessageBubbleProps) => {
   const isUser = message.sender === ESenderType.USER;
 
+  const renderContent = () => {
+    return <Markdown>{message.content}</Markdown>;
+  };
+
   return (
     <motion.div
       className="w-full mx-auto group/message "
@@ -26,11 +30,11 @@ const MessageBubble = ({ message }: MessageBubbleProps) => {
             </div>
           )}
           <div
-            className={`px-2 py-2 rounded-lg ${
+            className={`px-3 py-2 rounded-lg ${
               isUser ? "bg-primary text-white" : "text-black "
             }`}
           >
-            <Markdown>{message.content}</Markdown>
+            {renderContent()}
           </div>
         </div>
 

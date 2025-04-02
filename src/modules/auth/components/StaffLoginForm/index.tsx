@@ -23,7 +23,7 @@ export default function StaffLoginForm() {
         password: password,
       });
       setUserByCookies();
-      window.location.assign(new URL("/chat", window.location.href));
+      window.location.assign(new URL("/dashboard", window.location.href));
     } catch (err) {
       toast({
         title: "Erro",

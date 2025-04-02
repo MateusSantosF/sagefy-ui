@@ -1,13 +1,13 @@
+"use client";
+
 import axios, { AxiosInstance } from "axios";
 import { env } from "./env";
 import { decodeJwt } from "@shared/utils/decode-jwt";
 import { TToken } from "@shared/interfaces/TToken";
-import { cookies } from "next/headers";
+import { parseCookies } from "nookies";
 
-// Criação da instância do Axios
 export const axiosInstance = axios.create({ baseURL: env.api.base_url });
 
-// Função para verificar se o token está expirado
 const isTokenExpired = (jwtExp: number): boolean => {
   return jwtExp ? Date.now() > jwtExp * 1000 : false;
 };
@@ -18,9 +18,9 @@ export const setRefreshTokenInterceptor = (axios: AxiosInstance) => {
     const isServerSide = typeof window === "undefined";
     if (isServerSide) return config;
 
-    const parsedCookies = await cookies();
-    const accessToken = parsedCookies.get(env.api.access_token)?.value;
-    const refreshToken = parsedCookies.get(env.api.refresh_token)?.value;
+    const parsedCookies = parseCookies();
+    const accessToken = parsedCookies[env.api.access_token];
+    const refreshToken = parsedCookies[env.api.refresh_token];
 
     if (accessToken) {
       const decodedToken = decodeJwt<TToken>(accessToken);
@@ -47,8 +47,8 @@ export const setRefreshTokenInterceptor = (axios: AxiosInstance) => {
       if (error.response?.status === 401 && !originalRequest._retry) {
         originalRequest._retry = true;
 
-        const parsedCookies = await cookies();
-        const refreshToken = parsedCookies.get(env.api.refresh_token)?.value;
+        const parsedCookies = parseCookies();
+        const refreshToken = parsedCookies[env.api.refresh_token];
 
         if (refreshToken) {
           try {
