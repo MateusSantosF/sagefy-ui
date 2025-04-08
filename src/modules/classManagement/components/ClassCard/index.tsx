@@ -3,13 +3,14 @@
 import { useState } from "react";
 import { Card, CardContent, CardFooter } from "@shared/components/ui/card";
 
-import { Edit, Eye, EyeOff, Trash2, Users } from "lucide-react";
+import { BookOpen, Edit, Eye, EyeOff, Trash2, Users } from "lucide-react";
 import { IClass } from "@modules/classManagement/interfaces/IClass";
 import { Button } from "@shared/components/ui/button";
 import { EditClassModal } from "../EditClassModal";
 import { DeleteClassModal } from "../DeleteClassModal";
 import { ManageStudentsModal } from "../ManageStudentsModal";
 import { Badge } from "@shared/components/ui/badge";
+import { KnowledgeResourcesModal } from "../KnowledgeCard";
 
 interface ClassCardProps {
   classItem: IClass;
@@ -23,6 +24,7 @@ export function ClassCard({ classItem, onDeleted, onUpdated }: ClassCardProps) {
   const [showAccessCode, setShowAccessCode] = useState(false);
   const [isManageStudentsModalOpen, setIsManageStudentsModalOpen] =
     useState(false);
+  const [isKnowledgeModalOpen, setIsKnowledgeOpen] = useState(false);
 
   const studentCount =
     classItem.studentCount ||
@@ -80,7 +82,7 @@ export function ClassCard({ classItem, onDeleted, onUpdated }: ClassCardProps) {
           </div>
         </CardContent>
 
-        <CardFooter className="border-t border-gray-200 dark:border-gray-700 p-4 bg-gray-50 dark:bg-gray-800/50 gap-2">
+        <CardFooter className="border-t border-gray-200 flex-wrap flex dark:border-gray-700 p-4 bg-gray-50 dark:bg-gray-800/50 gap-2">
           <Button
             variant="outline"
             size="sm"
@@ -105,6 +107,15 @@ export function ClassCard({ classItem, onDeleted, onUpdated }: ClassCardProps) {
             <Users className="h-4 w-4 mr-1" />
             Alunos
           </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            className="flex-1"
+            onClick={() => setIsKnowledgeOpen(true)}
+          >
+            <BookOpen className="h-4 w-4 mr-1" />
+            Conhecimento
+          </Button>
         </CardFooter>
       </Card>
 
@@ -127,6 +138,12 @@ export function ClassCard({ classItem, onDeleted, onUpdated }: ClassCardProps) {
         onOpenChange={setIsManageStudentsModalOpen}
         classCode={classItem.classCode}
         onStudentsUpdated={onUpdated}
+      />
+
+      <KnowledgeResourcesModal
+        classCode={classItem.classCode}
+        open={isKnowledgeModalOpen}
+        onOpenChange={setIsKnowledgeOpen}
       />
     </>
   );

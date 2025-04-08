@@ -8,7 +8,6 @@ import { Button } from "@shared/components/ui/button";
 import { CreateClassModal } from "@modules/classManagement/components/CreateClassModal";
 import { ClassCard } from "@modules/classManagement/components/ClassCard";
 import { classService } from "@modules/classManagement/services/class.service";
-import { AppLayout } from "@shared/components/AppLayout";
 
 export default function ClassesPage() {
   const [classes, setClasses] = useState<IClass[]>([]);
@@ -41,7 +40,7 @@ export default function ClassesPage() {
   };
 
   return (
-    <AppLayout>
+    <>
       <div className="p-6">
         <div className="flex gap-4 flex-wrap justify-between pb-6">
           <h1 className="text-2xl font-bold">Minhas turmas</h1>
@@ -95,6 +94,6 @@ export default function ClassesPage() {
         onOpenChange={setIsCreateModalOpen}
         onClassCreated={handleClassCreated}
       />
-    </AppLayout>
+    </>
   );
 }

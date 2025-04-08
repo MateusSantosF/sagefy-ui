@@ -11,7 +11,6 @@ export function middleware(request: NextRequest) {
   const token = request.cookies.get(env.api.access_token)?.value;
   const refreshToken = request.cookies.get(env.api.refresh_token)?.value;
 
-  // Se faltar qualquer token, redireciona para a página de login
   if (!token || !refreshToken) {
     return NextResponse.redirect(new URL("/", request.url));
   }
@@ -28,7 +27,6 @@ export function middleware(request: NextRequest) {
   }
 
   const now = Date.now();
-  // Verifica se os tokens estão expirados (supondo que a propriedade "exp" esteja em segundos)
   if (
     !decodedToken ||
     now > decodedToken.exp * 1000 ||
@@ -42,5 +40,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/classes/:path*', '/dashboard/:path*', "/chat/:path*"],
-}
+  matcher: ["/classes/:path*", "/dashboard/:path*", "/chat/:path*"],
+};

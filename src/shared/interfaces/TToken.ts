@@ -12,7 +12,7 @@ export type TToken = {
     /** user name */
     name: string;
     /** user roles */
-    role: RolesType[];
+    role: RolesType;
     /** host */
     iss: string;
     /** target */

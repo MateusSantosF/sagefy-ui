@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { useAuth } from "@shared/contexts/auth.context"
-import { Button } from "../ui/button"
-import { Avatar, AvatarFallback } from "../ui/avatar"
-import { getInitials } from "@shared/utils/get-initials"
-import { LogOut, Menu, X } from "lucide-react"
+import { useState, useEffect } from "react";
+import { useAuth } from "@shared/contexts/auth.context";
+import { Button } from "../ui/button";
+import { Avatar, AvatarFallback } from "../ui/avatar";
+import { getInitials } from "@shared/utils/get-initials";
+import { LogOut, Menu, X } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,27 +13,33 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu"
-import { motion } from "framer-motion"
+} from "../ui/dropdown-menu";
+import { motion } from "framer-motion";
 
 export const Header = () => {
-  const { signout, user } = useAuth()
-  const [scrolled, setScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const { signout, user } = useAuth();
+  const [scrolled, setScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 10)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+      setScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  if (user?.roles == "ADMIN" || user?.roles == "TEACHER") {
+    return null;
+  }
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 h-20 w-full flex items-center justify-between px-4 md:px-6 transition-all duration-300 ${
-        scrolled ? "bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-md" : "bg-primary"
+      className={`sticky top-0 z-50 h-20 w-full flex items-center justify-between px-4 md:px-6 transition-all duration-300 ${
+        scrolled
+          ? "bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-md"
+          : "bg-primary"
       }`}
     >
       <div className="flex items-center">
@@ -41,15 +47,24 @@ export const Header = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className={`font-bold text-2xl ${scrolled ? "text-primary dark:text-white" : "text-white"}`}
+          className={`font-bold text-2xl ${
+            scrolled ? "text-primary dark:text-white" : "text-white"
+          }`}
         >
           Sagefy
         </motion.h1>
       </div>
 
       {/* Mobile menu button */}
-      <button className="md:hidden text-white p-2" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-        {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+      <button
+        className="md:hidden text-white p-2"
+        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+      >
+        {isMobileMenuOpen ? (
+          <X className="h-6 w-6" />
+        ) : (
+          <Menu className="h-6 w-6" />
+        )}
       </button>
 
       {/* Desktop menu */}
@@ -68,11 +83,16 @@ export const Header = () => {
             <DropdownMenuLabel>
               <div className="flex flex-col space-y-1">
                 <p className="text-sm font-medium leading-none">{user?.name}</p>
-                <p className="text-xs leading-none text-muted-foreground">{user?.email}</p>
+                <p className="text-xs leading-none text-muted-foreground">
+                  {user?.email}
+                </p>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-red-500 focus:text-red-500 cursor-pointer" onClick={() => signout()}>
+            <DropdownMenuItem
+              className="text-red-500 focus:text-red-500 cursor-pointer"
+              onClick={() => signout()}
+            >
               <LogOut className="mr-2 h-4 w-4" />
               <span>Sair</span>
             </DropdownMenuItem>
@@ -99,13 +119,16 @@ export const Header = () => {
               <span className="text-sm text-gray-500">{user?.email}</span>
             </div>
           </div>
-          <Button variant="destructive" className="w-full" onClick={() => signout()}>
+          <Button
+            variant="destructive"
+            className="w-full"
+            onClick={() => signout()}
+          >
             <LogOut className="mr-2 h-4 w-4" />
             Sair
           </Button>
         </motion.div>
       )}
     </header>
-  )
-}
-
+  );
+};

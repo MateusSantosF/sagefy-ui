@@ -61,7 +61,7 @@ const ChatPage = () => {
       <Header />
       <div
         ref={scrollContainerRef}
-        className="flex-1 flex w-full max-h-screen gap-6 flex-col items-center overflow-y-auto px-4"
+        className="flex-1 flex w-full gap-6 flex-col items-center overflow-y-auto px-4"
       >
         <div className="container max-w-6xl">
           {messages.map((msg, index) => (

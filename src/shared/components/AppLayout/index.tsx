@@ -1,7 +1,14 @@
 "use client";
 
 import { type ReactNode, useState, useEffect } from "react";
-import { LayoutDashboard, Users, LogOut, Plus, Menu } from "lucide-react";
+import {
+  LayoutDashboard,
+  Users,
+  LogOut,
+  Plus,
+  Menu,
+  BotIcon,
+} from "lucide-react";
 import { useAuth } from "@shared/contexts/auth.context";
 import { Button } from "../ui/button";
 import {
@@ -31,24 +38,33 @@ export function AppLayout({ children }: LayoutProps) {
     setIsMounted(true);
   }, []);
 
-  if (!isMounted) {
-    return null;
+  if (!isMounted || user?.roles == "STUDENT" || !user) {
+    return children;
   }
 
+  const handleLinkClick = () => {
+    setIsMobileMenuOpen(false);
+  };
 
   const SidebarContent = () => (
     <div className="flex flex-col   ">
       <div className="flex-1  flex flex-col items-start gap-4 mt-8">
-        <Link href={`/dashboard`}>
+        <Link href={`/dashboard`} onClick={handleLinkClick}>
           <Button variant="ghost" size="default" className="rounded-full">
             <LayoutDashboard className="h-5 w-5" />
             <span className="ml-2 md:hidden">Dashboard</span>
           </Button>
         </Link>
-        <Link href={`/classes`}>
+        <Link href={`/classes`} onClick={handleLinkClick}>
           <Button variant="ghost" size="default" className="rounded-full">
             <Users className="h-5 w-5" />
             <span className="ml-2 md:hidden">Minhas turmas</span>
+          </Button>
+        </Link>
+        <Link href={`/chat`} onClick={handleLinkClick}>
+          <Button variant="ghost" size="default" className="rounded-full">
+            <BotIcon className="h-5 w-5" />
+            <span className="ml-2 md:hidden">Chatbot</span>
           </Button>
         </Link>
       </div>
@@ -99,6 +115,19 @@ export function AppLayout({ children }: LayoutProps) {
               </TooltipTrigger>
               <TooltipContent side="right">
                 <p>Minhas turmas</p>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link href={`/chat`}>
+                  <Button variant="ghost" size="icon" className="rounded-full">
+                    <BotIcon className="h-5 w-5" />
+                  </Button>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent side="right">
+                <p>Conversar com o chatbot</p>
               </TooltipContent>
             </Tooltip>
           </div>

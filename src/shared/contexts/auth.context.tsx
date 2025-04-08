@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { env } from "@/configs/env";
 import { decodeJwt } from "../utils/decode-jwt";
-import { RolesType, TToken } from "../interfaces/TToken";
+import { TToken } from "../interfaces/TToken";
 import { TUser } from "../interfaces/TUser";
 
 type TAuthProps = {
@@ -77,14 +77,13 @@ export const AuthProvider = ({ children }: TAuthProps) => {
 
       const cookieData = cookie.split("=")[1];
 
-      const { sub, name, email, role } =
-        decodeJwt<TToken>(cookieData);
+      const { sub, name, email, role } = decodeJwt<TToken>(cookieData);
 
       setUser({
         id: sub,
         name,
         email,
-        roles: formatUserRoles(role),
+        roles: role,
       });
     } catch (err) {
       console.error(err);
@@ -92,16 +91,11 @@ export const AuthProvider = ({ children }: TAuthProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const formatUserRoles = (roles: string | string[]): RolesType[] => {
-    return typeof roles === "string"
-      ? ([roles] as RolesType[])
-      : (roles as RolesType[]);
-  };
-
   const signout = useCallback(
     async (options: SignoutOptions = { redirect: true }) => {
       try {
         await axios.post("/api/auth/signout");
+        setUser(null);
         if (options && options.redirect) {
           push("/");
           location.reload();

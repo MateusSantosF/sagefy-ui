@@ -18,7 +18,6 @@ import { CategoryRadarChart } from "@modules/dashboard/components/CategoryRadarC
 import { TopStudentsRanking } from "@modules/dashboard/components/TopStudentsRanking";
 import { ActivityTimeline } from "@modules/dashboard/components/ActivityTimeline";
 import { Skeleton } from "@shared/components/ui/skeleton";
-import { AppLayout } from "@shared/components/AppLayout";
 import { dashboardService } from "@modules/dashboard/services/dashboard.service";
 import {
   IClassMetric,
@@ -106,12 +105,12 @@ export default function DashboardPage() {
   });
 
   return (
-    <AppLayout>
+    <>
       <div className="flex flex-col min-h-screen">
         {/* Fixed Header */}
         <DashboardHeader />
 
-        <div className="flex-1 p-6 pt-20">
+        <div className="flex-1 p-6 pt-8">
           {isLoading ? (
             <div className="grid gap-6">
               <Skeleton className="h-[60px] w-full" />
@@ -175,7 +174,10 @@ export default function DashboardPage() {
 
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
                     {/* 3. Category Radar Chart */}
-                    <Tabs defaultValue="categories" className="w-full bg-white p-3 rounded-2xl shadow-md">
+                    <Tabs
+                      defaultValue="categories"
+                      className="w-full bg-white p-3 rounded-2xl shadow-md"
+                    >
                       <TabsList className="grid w-full grid-cols-2 bg-white">
                         <TabsTrigger value="categories">Categoria</TabsTrigger>
                         <TabsTrigger value="subcategories">
@@ -210,6 +212,6 @@ export default function DashboardPage() {
           )}
         </div>
       </div>
-    </AppLayout>
+    </>
   );
 }
