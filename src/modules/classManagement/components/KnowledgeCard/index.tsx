@@ -149,13 +149,14 @@ export function KnowledgeResourcesModal({
       });
     } finally {
       setIsUploading(false);
+      fetchResources()
     }
   };
 
   const handleDeleteResource = async (resource: IResource) => {
     const fileName = resource.name;
-    const classCode = resource.metadata.classCode;
-    const fileId = resource.metadata.fileId;
+    const classCode = resource.metadata.class_code;
+    const fileId = resource.metadata.file_id;
     if (!fileName || !fileId) {
       toast({
         title: "Erro ao deletar arquivo",
@@ -176,7 +177,7 @@ export function KnowledgeResourcesModal({
       });
       if (response.success) {
         setResources((prev) =>
-          prev.filter((res) => res.metadata.fileId !== fileName)
+          prev.filter((res) => res.metadata.file_id !== fileName)
         );
         toast({
           title: "Arquivo removido",
@@ -192,6 +193,7 @@ export function KnowledgeResourcesModal({
       });
     } finally {
       setDeletingId(null);
+      fetchResources()
     }
   };
 
@@ -326,9 +328,9 @@ export function KnowledgeResourcesModal({
               ) : (
                 <div className="p-4 space-y-3">
                   <AnimatePresence>
-                    {filteredResources.map((resource) => (
+                    {filteredResources.map((resource,key) => (
                       <motion.div
-                        key={resource.metadata.fileId}
+                        key={resource.metadata.file_id}
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, x: -10 }}
@@ -342,14 +344,12 @@ export function KnowledgeResourcesModal({
                               </div>
                               <div className="flex-1 min-w-0">
                                 <p className="font-medium truncate">
-                                  {resource.name}
+                                  {resource.metadata.original_name}
                                 </p>
                                 <div className="flex items-center text-sm text-gray-500 mt-1">
                                   <Badge variant="outline" className="mr-2">
                                     {getFileExtension(resource.name)}
                                   </Badge>
-                                  <span>{formatFileSize(resource.size)}</span>
-                                  <span className="mx-2">•</span>
                                   <span>
                                     {new Date(
                                       resource.uploadedAt
@@ -399,11 +399,11 @@ export function KnowledgeResourcesModal({
                                         handleDeleteResource(resource)
                                       }
                                       disabled={
-                                        deletingId === resource.metadata.fileId
+                                        deletingId === resource.metadata.file_id
                                       }
                                     >
                                       {deletingId ===
-                                      resource.metadata.fileId ? (
+                                      resource.metadata.file_id ? (
                                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                                       ) : (
                                         <Trash2 className="mr-2 h-4 w-4" />

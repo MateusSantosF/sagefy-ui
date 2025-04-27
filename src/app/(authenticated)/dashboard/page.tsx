@@ -83,7 +83,6 @@ export default function DashboardPage() {
   const classMetrics = getClassMetrics(selectedClass);
   const hasData = classMetrics.length > 0;
 
-  // Filter metrics by date range if set
   const filteredMetrics = classMetrics.filter((metric: IClassMetric) => {
     if (!dateRange.from && !dateRange.to) return true;
 

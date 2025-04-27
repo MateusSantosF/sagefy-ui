@@ -1,10 +1,7 @@
 "use client";
 
-import type React from "react";
-
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@shared/components/ui/button";
-
 import { useToast } from "@/hooks/use-toast";
 import { classService } from "@modules/classManagement/services/class.service";
 import { Label } from "@shared/components/ui/label";
@@ -23,6 +20,33 @@ interface CreateClassModalProps {
   onClassCreated: () => void;
 }
 
+/**
+ * Gera um nome válido para container de Blob Storage no Azure,
+ * baseado no nome da turma. Regras:
+ * - somente letras minúsculas, números e hífens (-)
+ * - não pode iniciar ou terminar com hífen
+ * - sem hífens consecutivos
+ * - entre 3 e 63 caracteres 
+ */
+function generateContainerName(name: string): string {
+  const slug = name
+    .normalize("NFD") // separa acentos
+    .replace(/[̀-ͯ]/g, "") // remove acentos
+    .toLowerCase()
+    .replace(/[^a-z0-9-]/g, "-") // substitui caracteres inválidos por hífen
+    .replace(/^-+|-+$/g, "") // remove hífens do início/fim
+    .replace(/-{2,}/g, "-"); // remove hífens consecutivos
+
+  // garante tamanho mínimo e máximo
+  if (slug.length < 3) {
+    return slug.padEnd(3, "0");
+  }
+  if (slug.length > 63) {
+    return slug.substring(0, 63);
+  }
+  return slug;
+}
+
 export function CreateClassModal({
   open,
   onOpenChange,
@@ -33,6 +57,15 @@ export function CreateClassModal({
   const [className, setClassName] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+
+  // Atualiza classCode baseado no className
+  useEffect(() => {
+    if (className) {
+      setClassCode(generateContainerName(className));
+    } else {
+      setClassCode("");
+    }
+  }, [className]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,7 +95,7 @@ export function CreateClassModal({
       });
 
       onClassCreated();
-      setClassCode("");
+      setClassName("");
       setAccessCode("");
     } catch (error) {
       console.error("Failed to create class:", error);
@@ -85,7 +118,7 @@ export function CreateClassModal({
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
             <div className="grid gap-2">
-              <Label htmlFor="classCode">Nome da turma</Label>
+              <Label htmlFor="className">Nome da turma</Label>
               <Input
                 id="className"
                 value={className}
@@ -99,7 +132,9 @@ export function CreateClassModal({
                 id="classCode"
                 value={classCode}
                 onChange={(e) => setClassCode(e.target.value)}
-                placeholder="ex: BCCCALC022024"
+                placeholder="ex: 3o-ano-a"
+                disabled
+                readOnly
               />
             </div>
             <div className="grid gap-2">

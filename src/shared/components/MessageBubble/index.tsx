@@ -1,22 +1,30 @@
-import { ESenderType, IMessage } from "@/shared/interfaces/Message";
-import { motion } from "framer-motion";
-import { Markdown } from "../Markdown";
-import Feedback from "../Feedback";
+import React, { useState } from "react";
 import { Sparkles } from "lucide-react";
+import { motion } from "framer-motion";
+import Markdown from "react-markdown";
+import { ESenderType, IMessage } from "@shared/interfaces/Message";
+import Feedback from "../Feedback";
+
 type MessageBubbleProps = {
   message: IMessage;
 };
 
 const MessageBubble = ({ message }: MessageBubbleProps) => {
   const isUser = message.sender === ESenderType.USER;
-
   const renderContent = () => {
     return <Markdown>{message.content}</Markdown>;
   };
 
+  const bubbleStyles =
+    message.type === "error"
+      ? "bg-red-400 text-white"
+      : isUser
+        ? "bg-primary text-white"
+        : "text-black";
+
   return (
     <motion.div
-      className="w-full mx-auto group/message "
+      className="w-full mx-auto group/message"
       initial={{ y: 5, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
     >
@@ -29,11 +37,7 @@ const MessageBubble = ({ message }: MessageBubbleProps) => {
               <Sparkles color="white" size={18} />
             </div>
           )}
-          <div
-            className={`px-3 py-2 rounded-lg ${
-              isUser ? "bg-primary text-white" : "text-black "
-            }`}
-          >
+          <div className={`px-6 py-3 rounded-lg ${bubbleStyles}`}>
             {renderContent()}
           </div>
         </div>

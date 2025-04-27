@@ -8,7 +8,6 @@ interface CategoryRadarChartProps {
 }
 
 export function CategoryRadarChart({ metrics, type }: CategoryRadarChartProps) {
-  // Get the most recent metric
   const latestMetric = [...metrics].sort((a, b) => {
     const dateA = new Date(a.timestamp || 0)
     const dateB = new Date(b.timestamp || 0)
@@ -32,7 +31,7 @@ export function CategoryRadarChart({ metrics, type }: CategoryRadarChartProps) {
 
   // Parse categories or subcategories
   const field = type === "categories" ? "top_categories" : "top_subcategories"
-  const items = latestMetric[field]?.split(",").map((item: string) => item.trim()) || []
+  const items = latestMetric[field].map((item: string) => item.trim()) || []
 
   // Create data for radar chart
   const chartData = items.map((item: string, index: number) => ({

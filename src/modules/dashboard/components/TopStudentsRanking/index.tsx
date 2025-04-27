@@ -9,13 +9,11 @@ interface TopStudentsRankingProps {
 }
 
 export function TopStudentsRanking({ metrics }: TopStudentsRankingProps) {
-  // Extract student data from all metrics entries
   const studentData: { email: string; count: number }[] = []
-
   metrics.forEach((metric) => {
     if (metric.top_students) {
       try {
-        const students = JSON.parse(metric.top_students)
+        const students = metric.top_students
         students.forEach((student: { email: string; count: number }) => {
           const existingStudent = studentData.find((s) => s.email === student.email)
           if (existingStudent) {
@@ -25,15 +23,12 @@ export function TopStudentsRanking({ metrics }: TopStudentsRankingProps) {
           }
         })
       } catch (e) {
-        // Handle parsing error
+
       }
     }
   })
 
-  // Sort by conversation count (descending)
   studentData.sort((a, b) => b.count - a.count)
-
-  // Medal emojis for top 3
   const medals = ["🥇", "🥈", "🥉"]
 
   return (

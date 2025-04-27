@@ -25,7 +25,6 @@ export function ClassSummaryCards({ metrics, classCode }: ClassSummaryCardsProps
 
   const topCategories =
     latestMetric?.top_categories
-      ?.split(",")
       .map((cat: string) => cat.trim())
       .slice(0, 5) || []
 
@@ -39,7 +38,7 @@ export function ClassSummaryCards({ metrics, classCode }: ClassSummaryCardsProps
   ]
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <Card className="rounded-2xl shadow-md overflow-hidden">
         <CardContent className="p-6">
           <div className="flex justify-between items-start mb-4">

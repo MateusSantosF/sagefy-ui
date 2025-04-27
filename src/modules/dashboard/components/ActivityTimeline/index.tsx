@@ -28,7 +28,7 @@ export function ActivityTimeline({ metrics }: ActivityTimelineProps) {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Data/Hora</TableHead>
+                  <TableHead>Data</TableHead>
                   <TableHead>Turma</TableHead>
                   <TableHead>Conversas</TableHead>
                   <TableHead>Tokens</TableHead>
@@ -43,7 +43,6 @@ export function ActivityTimeline({ metrics }: ActivityTimelineProps) {
                   // Get first 3 categories
                   const categories =
                     metric.top_categories
-                      ?.split(",")
                       .map((cat: string) => cat.trim())
                       .slice(0, 3) || []
 
@@ -51,13 +50,13 @@ export function ActivityTimeline({ metrics }: ActivityTimelineProps) {
                   const rowClass = index % 2 === 0 ? "bg-gray-50 dark:bg-gray-800/50" : ""
 
                   return (
-                    <TableRow key={metric.RowKey} className={rowClass}>
+                    <TableRow key={index} className={rowClass}>
                       <TableCell className="font-medium">
-                        {isValidDate ? format(date, "PPp", { locale: ptBR }) : "Data não disponível"}
+                        {isValidDate ? format(date, "PP", { locale: ptBR }) : "Data não disponível"}
                       </TableCell>
                       <TableCell>
                         <Badge variant="outline" className="rounded-full">
-                          {metric.class_code || metric.PartitionKey}
+                          {metric.class_code}
                         </Badge>
                       </TableCell>
                       <TableCell>{metric.total_conversations || 0}</TableCell>

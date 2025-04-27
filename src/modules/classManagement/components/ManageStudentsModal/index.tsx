@@ -84,7 +84,7 @@ export function ManageStudentsModal({ open, onOpenChange, classCode, onStudentsU
 
       toast({
         title: "Success",
-        description: `${emailList.length} student(s) added to class ${classCode}.`,
+        description: `${emailList.length} estudantes adicionados na classe ${classCode}.`,
       })
 
       fetchDetails()
@@ -94,7 +94,7 @@ export function ManageStudentsModal({ open, onOpenChange, classCode, onStudentsU
       console.error("Failed to add students:", error)
       toast({
         title: "Error",
-        description: "Failed to add students. Please try again.",
+        description: "Erro ao adicionar estudantes. Tente novamente.",
         variant: "destructive",
       })
     } finally {

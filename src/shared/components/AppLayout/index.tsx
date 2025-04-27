@@ -131,24 +131,6 @@ export function AppLayout({ children }: LayoutProps) {
               </TooltipContent>
             </Tooltip>
           </div>
-
-          <div className="mt-auto mb-4">
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="rounded-full bg-primary text-white hover:bg-primary/90 hover:text-white"
-                  onClick={() => setIsCreateModalOpen(true)}
-                >
-                  <Plus className="h-5 w-5" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent side="right">
-                <p>Create Class</p>
-              </TooltipContent>
-            </Tooltip>
-          </div>
         </TooltipProvider>
       </div>
 

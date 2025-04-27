@@ -36,20 +36,18 @@ export const Header = () => {
 
   return (
     <header
-      className={`sticky top-0 z-50 h-20 w-full flex items-center justify-between px-4 md:px-6 transition-all duration-300 ${
-        scrolled
-          ? "bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-md"
-          : "bg-primary"
-      }`}
+      className={`sticky top-0 z-50 h-[60px] w-full flex items-center justify-between px-4 md:px-6 transition-all duration-300 ${scrolled
+          ? "bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-md  h-[60px]"
+          : "bg-primary  h-[60px]"
+        }`}
     >
-      <div className="flex items-center">
+      <div className="flex items-center bg-primary">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className={`font-bold text-2xl ${
-            scrolled ? "text-primary dark:text-white" : "text-white"
-          }`}
+          className={`font-bold text-2xl ${scrolled ? "text-primary dark:text-white" : "text-white"
+            }`}
         >
           Sagefy
         </motion.h1>
@@ -57,7 +55,7 @@ export const Header = () => {
 
       {/* Mobile menu button */}
       <button
-        className="md:hidden text-white p-2"
+        className="md:hidden text-white p-2  h-[60px]"
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
       >
         {isMobileMenuOpen ? (
@@ -68,7 +66,7 @@ export const Header = () => {
       </button>
 
       {/* Desktop menu */}
-      <div className="hidden md:flex items-center gap-4">
+      <div className="hidden md:flex items-center gap-4 h-[60px]">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="relative h-10 w-10 rounded-full">
@@ -106,7 +104,7 @@ export const Header = () => {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className="absolute top-20 left-0 right-0 bg-white dark:bg-gray-900 shadow-md p-4 flex flex-col items-center gap-4 md:hidden"
+          className="absolute top-[60px] left-0 right-0 bg-white dark:bg-gray-900 shadow-md p-4 flex flex-col items-center gap-4 md:hidden"
         >
           <div className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
             <Avatar className="h-10 w-10">

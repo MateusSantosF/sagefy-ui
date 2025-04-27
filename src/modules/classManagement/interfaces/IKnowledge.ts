@@ -5,10 +5,10 @@ export interface IResource {
   uploadedAt: string;
   url: string;
   metadata: {
-    professor: string;
-    classCode: string;
-    fileId: string;
-    originalFileName: string;
+    uploaded_by: string;
+    class_code: string;
+    file_id: string;
+    original_name: string;
   };
 }
 
