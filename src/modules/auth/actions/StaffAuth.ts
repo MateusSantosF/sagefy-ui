@@ -16,5 +16,6 @@ export async function staftAuth(dto: AuthRequest) {
     parsedCookies.set(buildCookie.refreshToken(refreshToken));
   } catch (err) {
     console.log(err);
+    throw new Error(`Error in staff authentication ${err}`);
   }
 }

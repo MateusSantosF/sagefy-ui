@@ -19,6 +19,6 @@ export async function studentAuth(dto: AuthRequest) {
     parsedCookies.set(buildCookie.refreshToken(refreshToken));
   } catch (err) {
     console.log(err);
-    throw new Error("Erro ao fazer login");
+    throw new Error(`Error in student authentication ${err}`);
   }
 }
