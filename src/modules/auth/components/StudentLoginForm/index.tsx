@@ -6,6 +6,7 @@ import { studentAuth } from "@modules/auth/actions/StudentAuth";
 import { useAuth } from "@shared/contexts/auth.context";
 import { useToast } from "@/hooks/use-toast";
 import { LoaderCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function StudentLoginForm() {
   const [email, setEmail] = useState("");
@@ -13,6 +14,7 @@ export default function StudentLoginForm() {
   const { setUserByCookies } = useAuth();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,11 +25,11 @@ export default function StudentLoginForm() {
         accessCode: accessCode,
       });
       setUserByCookies();
-      window.location.assign(new URL("/chat", window.location.href));
+      router.push("/chat");
     } catch (err) {
-      toast({
-        title: "Erro",
-        description: "Erro ao fazer login",
+        toast({
+        title: "Ops...",
+        description: "Verifique seu email e senha",
       });
       console.error(err);
     } finally {

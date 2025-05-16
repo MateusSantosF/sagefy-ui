@@ -2,8 +2,9 @@ import { env } from "@/configs/env";
 import { TToken } from "@shared/interfaces/TToken";
 import { decodeJwt } from "@shared/utils/decode-jwt";
 import { NextRequest, NextResponse } from "next/server";
+import { renewSessionTokens} from "@modules/auth/actions/renewSessionTokens";
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname === "/") {
     return NextResponse.next();
   }
@@ -11,8 +12,14 @@ export function middleware(request: NextRequest) {
   const token = request.cookies.get(env.api.access_token)?.value;
   const refreshToken = request.cookies.get(env.api.refresh_token)?.value;
 
-  if (!token || !refreshToken) {
+  if (!refreshToken) {
     return NextResponse.redirect(new URL("/", request.url));
+  }
+
+  if (!token) {
+    console.log("Token expired, but refresh token is valid. Renewing tokens...");
+    await renewSessionTokens()
+    return NextResponse.next();
   }
 
   let decodedToken;
@@ -27,12 +34,17 @@ export function middleware(request: NextRequest) {
   }
 
   const now = Date.now();
-  if (
-    !decodedToken ||
-    now > decodedToken.exp * 1000 ||
-    !decodedRefreshToken ||
-    now > decodedRefreshToken.exp * 1000
-  ) {
+  const isTokenExpired = decodedToken.exp * 1000 < now;
+  const isRefreshTokenExpired = decodedRefreshToken.exp * 1000 < now;
+
+  if(isTokenExpired && !isRefreshTokenExpired) {
+    console.log("Token expired, but refresh token is valid. Renewing tokens...");
+    await renewSessionTokens()
+    return NextResponse.next();
+  }
+
+  if (isRefreshTokenExpired) {
+    console.error("Token expired");
     return NextResponse.redirect(new URL("/", request.url));
   }
 
@@ -40,5 +52,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/classes/:path*", "/dashboard/:path*", "/chat/:path*"],
+  matcher: ["/classes/:path*", "/dashboard/:path*", "/chat/:path*", "/teachers/:path*"],
 };

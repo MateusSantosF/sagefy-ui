@@ -40,7 +40,7 @@ const ChatInput = ({ onSend, loading = false }: ChatInputProps) => {
         </button>
 
         <textarea
-          className="h-[97%] w-full resize-none overflow-hidden rounded-[7px] border border-blue-gray-200 bg-transparent px-3 py-3 pr-20 text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+          className="h-[97%] w-full bg-white resize-none overflow-hidden rounded-[7px] border border-blue-gray-200 bg-transparent px-3 py-3 pr-20 text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
           placeholder="Digite sua mensagem..."
           value={message}
           rows={1}

@@ -3,8 +3,9 @@
 import { type ReactNode, useState, useEffect } from "react";
 import {
   LayoutDashboard,
-  Users,
   LogOut,
+  Users,
+  GraduationCap,
   Plus,
   Menu,
   BotIcon,
@@ -33,6 +34,11 @@ export function AppLayout({ children }: LayoutProps) {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  const userRole = user?.roles;
+  const isStudent = userRole === "STUDENT";
+  const isTeacher = userRole === "TEACHER";
+  const isADMIN = userRole === "ADMIN";
+
   // Avoid hydration issues
   useEffect(() => {
     setIsMounted(true);
@@ -55,12 +61,23 @@ export function AppLayout({ children }: LayoutProps) {
             <span className="ml-2 md:hidden">Dashboard</span>
           </Button>
         </Link>
-        <Link href={`/classes`} onClick={handleLinkClick}>
-          <Button variant="ghost" size="default" className="rounded-full">
-            <Users className="h-5 w-5" />
-            <span className="ml-2 md:hidden">Minhas turmas</span>
-          </Button>
-        </Link>
+        {isADMIN && (
+          <Link href={`/teachers`} onClick={handleLinkClick}>
+            <Button variant="ghost" size="default" className="rounded-full">
+              <GraduationCap className="h-5 w-5" />
+              <span className="ml-2 md:hidden">Professores</span>
+            </Button>
+          </Link>
+        )}
+        {isTeacher && (
+          <Link href={`/classes`} onClick={handleLinkClick}>
+            <Button variant="ghost" size="default" className="rounded-full">
+              <Users className="h-5 w-5" />
+              <span className="ml-2 md:hidden">Minhas turmas</span>
+            </Button>
+          </Link>
+        )}
+
         <Link href={`/chat`} onClick={handleLinkClick}>
           <Button variant="ghost" size="default" className="rounded-full">
             <BotIcon className="h-5 w-5" />
@@ -105,18 +122,43 @@ export function AppLayout({ children }: LayoutProps) {
               </TooltipContent>
             </Tooltip>
 
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Link href={`/classes`}>
-                  <Button variant="ghost" size="icon" className="rounded-full">
-                    <Users className="h-5 w-5" />
-                  </Button>
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent side="right">
-                <p>Minhas turmas</p>
-              </TooltipContent>
-            </Tooltip>
+            {isADMIN && (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Link href={`/teachers`}>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="rounded-full"
+                    >
+                      <GraduationCap className="h-5 w-5" />
+                    </Button>
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent side="right">
+                  <p>Professores</p>
+                </TooltipContent>
+              </Tooltip>
+            )}
+
+            {isTeacher && (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Link href={`/classes`}>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="rounded-full"
+                    >
+                      <Users className="h-5 w-5" />
+                    </Button>
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent side="right">
+                  <p>Minhas turmas</p>
+                </TooltipContent>
+              </Tooltip>
+            )}
 
             <Tooltip>
               <TooltipTrigger asChild>

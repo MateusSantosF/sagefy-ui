@@ -6,13 +6,14 @@ import { Label } from "@shared/components//ui/label";
 import { useAuth } from "@shared/contexts/auth.context";
 import { LoaderCircle } from "lucide-react";
 import { useState } from "react";
-
+import { useRouter } from "next/navigation";
 export default function StaffLoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { setUserByCookies } = useAuth();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     try {
@@ -23,11 +24,11 @@ export default function StaffLoginForm() {
         password: password,
       });
       setUserByCookies();
-      window.location.assign(new URL("/dashboard", window.location.href));
+      router.push("/dashboard");
     } catch (err) {
       toast({
-        title: "Erro",
-        description: "Erro ao fazer login",
+        title: "Ops...",
+        description: "Verifique seu email e senha",
       });
       console.error(err);
     } finally {

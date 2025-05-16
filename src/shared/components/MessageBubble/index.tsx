@@ -19,8 +19,8 @@ const MessageBubble = ({ message }: MessageBubbleProps) => {
     message.type === "error"
       ? "bg-red-400 text-white"
       : isUser
-        ? "bg-primary text-white"
-        : "text-black";
+        ? "bg-primary text-white !not-prose"
+        : "bg-white text-black prose prose-sm";
 
   return (
     <motion.div
