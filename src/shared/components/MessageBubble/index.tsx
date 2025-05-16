@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 import Markdown from "react-markdown";

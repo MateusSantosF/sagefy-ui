@@ -23,7 +23,7 @@ export function TopStudentsRanking({ metrics }: TopStudentsRankingProps) {
           }
         })
       } catch (e) {
-
+        console.error("Error processing top students:", e)
       }
     }
   })

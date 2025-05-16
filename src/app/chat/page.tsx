@@ -12,10 +12,10 @@ import { sentMessage } from "@modules/auth/actions/SentMessage";
 import { useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-export const DEFAULT_ERROR_MESSAGE =
+const DEFAULT_ERROR_MESSAGE =
   "Desculpe, tivemos um imprevisto ao processar sua mensagem. Tente novamente mais tarde.";
 
-const ChatPage = () => {
+export default function ChatPage() {
   const [isLoading, setIsLoading] = useState(false);
   const { messages, history, addMessage, addHistory } = useChatMessages();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -85,4 +85,4 @@ const ChatPage = () => {
   );
 };
 
-export default ChatPage;
+

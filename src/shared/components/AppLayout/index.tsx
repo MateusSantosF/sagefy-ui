@@ -35,7 +35,6 @@ export function AppLayout({ children }: LayoutProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const userRole = user?.roles;
-  const isStudent = userRole === "STUDENT";
   const isTeacher = userRole === "TEACHER";
   const isADMIN = userRole === "ADMIN";
 

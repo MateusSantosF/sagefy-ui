@@ -6,21 +6,18 @@ interface TokenEvolutionChartProps {
 }
 
 export function TokenEvolutionChart({ metrics }: TokenEvolutionChartProps) {
-  // Sort metrics by timestamp
   const sortedMetrics = [...metrics].sort((a, b) => {
     const dateA = new Date(a.timestamp || 0)
     const dateB = new Date(b.timestamp || 0)
     return dateA.getTime() - dateB.getTime()
   })
 
-  // Process data for the chart
   const chartData = sortedMetrics.map((metric) => {
-    // Extract date from timestamp for the x-axis
     let date = new Date()
     try {
       date = new Date(metric.timestamp)
     } catch (e) {
-      // Use fallback date if timestamp is invalid
+      console.error("Error parsing date:", e)
     }
 
     return {

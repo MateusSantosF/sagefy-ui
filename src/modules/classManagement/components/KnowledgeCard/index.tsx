@@ -224,16 +224,6 @@ export function KnowledgeResourcesModal({
     return resource.name.toLowerCase().includes(searchQuery.toLowerCase());
   });
 
-  const formatFileSize = (bytes: number) => {
-    if (bytes === 0) return "0 Bytes";
-    const k = 1024;
-    const sizes = ["Bytes", "KB", "MB", "GB"];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return (
-      Number.parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i]
-    );
-  };
-
   const getFileExtension = (fileName: string) => {
     const parts = fileName.split(".");
     return parts.length > 1 ? parts[parts.length - 1] : "";
@@ -328,7 +318,7 @@ export function KnowledgeResourcesModal({
               ) : (
                 <div className="p-4 space-y-3">
                   <AnimatePresence>
-                    {filteredResources.map((resource,key) => (
+                    {filteredResources.map((resource, _) => (
                       <motion.div
                         key={resource.metadata.file_id}
                         initial={{ opacity: 0, y: 10 }}
