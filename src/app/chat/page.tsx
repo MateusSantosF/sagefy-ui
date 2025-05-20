@@ -72,7 +72,7 @@ export default function ChatPage() {
         ref={scrollContainerRef}
         className="flex-1 flex w-full gap-6 flex-col items-center overflow-y-auto px-4"
       >
-        <div className="container max-w-6xl">
+        <div className="container max-w-6xl h-screen">
           {messages.map((msg, index) => (
             <MessageBubble key={index} message={msg} />
           ))}
