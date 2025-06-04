@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { motion } from "framer-motion";
 import { Book, GraduationCap, UserCog } from "lucide-react";
 
@@ -111,7 +111,9 @@ export default function LoginPage() {
                   </TabsList>
 
                   <TabsContent value="student" className="mt-0">
-                    <StudentLoginForm />
+                    <Suspense>
+                      <StudentLoginForm />
+                    </Suspense>
                   </TabsContent>
                   <TabsContent value="staff" className="mt-0">
                     <StaffLoginForm />
