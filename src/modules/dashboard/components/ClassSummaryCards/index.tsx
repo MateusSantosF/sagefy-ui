@@ -23,22 +23,6 @@ export function ClassSummaryCards({ metrics, classCode }: ClassSummaryCardsProps
     return dateB.getTime() - dateA.getTime()
   })[0]
 
-  
-
-  const topCategories =
-    latestMetric?.top_categories
-      .map((cat: string) => cat.trim())
-      .slice(0, 5) || []
-
-  // Badge colors for categories
-  const badgeColors = [
-    "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300",
-    "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300",
-    "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300",
-    "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300",
-    "bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-300",
-  ]
-
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
       <Card className="rounded-2xl shadow-md overflow-hidden">
