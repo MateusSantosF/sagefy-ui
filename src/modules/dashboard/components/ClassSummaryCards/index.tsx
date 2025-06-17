@@ -16,13 +16,6 @@ export function ClassSummaryCards({ metrics, classCode }: ClassSummaryCardsProps
   const totalCompletionTokens = metrics.reduce((sum, metric) => sum + (metric.total_completion_tokens || 0), 0)
   const totalTokens = metrics.reduce((sum, metric) => sum + (metric.total_tokens || 0), 0)
 
-  // Get top categories from the most recent metric
-  const latestMetric = [...metrics].sort((a, b) => {
-    const dateA = new Date(a.timestamp || 0)
-    const dateB = new Date(b.timestamp || 0)
-    return dateB.getTime() - dateA.getTime()
-  })[0]
-
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
       <Card className="rounded-2xl shadow-md overflow-hidden">
