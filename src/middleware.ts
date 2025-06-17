@@ -3,6 +3,7 @@ import { TToken } from "@shared/interfaces/TToken";
 import { decodeJwt } from "@shared/utils/decode-jwt";
 import { NextRequest, NextResponse } from "next/server";
 import { renewSessionTokens} from "@modules/auth/actions/renewSessionTokens";
+import { clearCookies } from "@modules/auth/actions/clearCookies";
 
 export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname === "/") {
@@ -45,6 +46,7 @@ export async function middleware(request: NextRequest) {
 
   if (isRefreshTokenExpired) {
     console.error("Token expired");
+    clearCookies();
     return NextResponse.redirect(new URL("/", request.url));
   }
 

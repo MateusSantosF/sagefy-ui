@@ -20,7 +20,7 @@ export function ActivityTimeline({ metrics }: ActivityTimelineProps) {
   return (
     <Card className="rounded-2xl shadow-md">
       <CardHeader className="pb-2">
-        <CardTitle className="text-lg">Tabela de Atividades por Data</CardTitle>
+        <CardTitle className="text-lg">Tabela de interações por data</CardTitle>
       </CardHeader>
       <CardContent>
         {sortedMetrics.length > 0 ? (

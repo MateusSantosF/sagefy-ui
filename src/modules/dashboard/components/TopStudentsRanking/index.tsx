@@ -34,7 +34,7 @@ export function TopStudentsRanking({ metrics }: TopStudentsRankingProps) {
   return (
     <Card className="rounded-2xl shadow-md">
       <CardHeader className="pb-2">
-        <CardTitle className="text-lg">Top Alunos</CardTitle>
+        <CardTitle className="text-lg">Alunos com mais interações</CardTitle>
       </CardHeader>
       <CardContent>
         {studentData.length > 0 ? (

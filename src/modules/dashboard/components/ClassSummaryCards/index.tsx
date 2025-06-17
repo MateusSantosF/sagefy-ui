@@ -23,6 +23,8 @@ export function ClassSummaryCards({ metrics, classCode }: ClassSummaryCardsProps
     return dateB.getTime() - dateA.getTime()
   })[0]
 
+  
+
   const topCategories =
     latestMetric?.top_categories
       .map((cat: string) => cat.trim())
@@ -38,7 +40,7 @@ export function ClassSummaryCards({ metrics, classCode }: ClassSummaryCardsProps
   ]
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
       <Card className="rounded-2xl shadow-md overflow-hidden">
         <CardContent className="p-6">
           <div className="flex justify-between items-start mb-4">
@@ -57,27 +59,15 @@ export function ClassSummaryCards({ metrics, classCode }: ClassSummaryCardsProps
             <span className="font-bold text-lg">{totalConversations}</span>
           </div>
 
-          <div className="space-y-1 mb-4">
-            <div className="flex justify-between text-sm">
+          <div className="space-y-1 pt-6 mb-4">
+            <div className="flex justify-between text-md">
               <span>Prompt Tokens:</span>
               <span className="font-medium">{totalPromptTokens.toLocaleString()}</span>
             </div>
-            <div className="flex justify-between text-sm">
+            <div className="flex justify-between text-md">
               <span>Completion Tokens:</span>
               <span className="font-medium">{totalCompletionTokens.toLocaleString()}</span>
             </div>
-            <div className="flex justify-between font-medium">
-              <span>Total Tokens:</span>
-              <span className="font-bold">{totalTokens.toLocaleString()}</span>
-            </div>
-          </div>
-
-          <div className="flex flex-wrap gap-2 mt-4">
-            {topCategories.map((category: string, index: number) => (
-              <Badge key={category} className={`${badgeColors[index]} border-0`}>
-                {category}
-              </Badge>
-            ))}
           </div>
         </CardContent>
       </Card>
@@ -129,32 +119,6 @@ export function ClassSummaryCards({ metrics, classCode }: ClassSummaryCardsProps
         </CardContent>
       </Card>
 
-      <Card className="rounded-2xl shadow-md overflow-hidden">
-        <CardContent className="p-6">
-          <div className="flex justify-between items-start mb-4">
-            <div>
-              <h3 className="text-lg font-semibold">Principais Categorias</h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">Temas mais discutidos</p>
-            </div>
-          </div>
-
-          <div className="space-y-3">
-            {topCategories.map((category: string, index: number) => (
-              <div key={category} className="flex items-center gap-2">
-                <div className={`w-3 h-3 rounded-full ${badgeColors[index].split(" ")[0]}`}></div>
-                <span className="flex-1">{category}</span>
-                <Badge variant="outline" className="ml-auto">
-                  {100 - index * 15}%
-                </Badge>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
-            <p className="text-sm text-gray-500 dark:text-gray-400">Baseado nas interações mais recentes da turma</p>
-          </div>
-        </CardContent>
-      </Card>
     </div>
   )
 }
