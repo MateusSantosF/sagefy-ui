@@ -188,9 +188,11 @@ export default function DashboardPage() {
                             <strong>Data:</strong>{" "}
                             {formatDateInBrazil(metric.timestamp)}
                           </p>
-                          <div className="pl-4">
-                            <Markdown>{metric.daily_summary}</Markdown>
-                          </div>
+                          {metric.daily_summary && (
+                            <div className="pl-4">
+                              <Markdown>{metric.daily_summary}</Markdown>
+                            </div>
+                          )}
                         </CardContent>
                       </Card>
                     ))}

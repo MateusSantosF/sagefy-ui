@@ -36,7 +36,7 @@ import {
 import { Input } from "@shared/components/ui/input";
 import { ScrollArea } from "@shared/components/ui/scroll-area";
 import { Button } from "@shared/components/ui/button";
-import { Card, CardContent } from "@shared/components/ui/card";
+import { Card } from "@shared/components/ui/card";
 import { Badge } from "@shared/components/ui/badge";
 import {
   DropdownMenu,

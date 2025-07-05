@@ -12,8 +12,8 @@ export interface IClassMetric {
   total_tokens: number;
   top_categories: string[];
   top_subcategories: string[];
-  top_studendaily_summaryts: IStudentMetric[];
-  daily_summary: string;
+  top_students: IStudentMetric[];
+  daily_summary?: string;
   timestamp: string;
 }
 

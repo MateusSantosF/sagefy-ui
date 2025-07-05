@@ -3,8 +3,6 @@ import { Badge } from "@shared/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@shared/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@shared/components/ui/table"
 import { formatDateInBrazil } from "@shared/utils/format-date"
-import { format } from "date-fns"
-import { ptBR } from "date-fns/locale"
 
 interface ActivityTimelineProps {
   metrics: IClassMetric[]
