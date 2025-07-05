@@ -2,6 +2,7 @@ import { IClassMetric } from "@modules/dashboard/interfaces/IDashboard"
 import { Badge } from "@shared/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@shared/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@shared/components/ui/table"
+import { formatDateInBrazil } from "@shared/utils/format-date"
 import { format } from "date-fns"
 import { ptBR } from "date-fns/locale"
 
@@ -52,7 +53,7 @@ export function ActivityTimeline({ metrics }: ActivityTimelineProps) {
                   return (
                     <TableRow key={index} className={rowClass}>
                       <TableCell className="font-medium">
-                        {isValidDate ? format(date, "PP", { locale: ptBR }) : "Data não disponível"}
+                        {isValidDate ? formatDateInBrazil(metric.timestamp) : "Data não disponível"}
                       </TableCell>
                       <TableCell>
                         <Badge variant="outline" className="rounded-full">

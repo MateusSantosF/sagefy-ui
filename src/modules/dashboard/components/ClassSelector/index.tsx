@@ -24,7 +24,7 @@ export function ClassSelector({ classes, selectedClass, onClassChange }: ClassSe
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full md:w-[300px] justify-between rounded-xl border-2 h-11"
+          className="md:min-w-[300px] w-fit justify-between rounded-xl border-2 h-11"
         >
           {selectedClass ? `Turma ${selectedClass}` : "Selecionar turma..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />

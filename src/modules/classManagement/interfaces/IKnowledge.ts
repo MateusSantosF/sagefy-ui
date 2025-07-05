@@ -19,7 +19,7 @@ export interface IGetResourcesResponse {
 export interface IUploadResourceRequest {
   fileName: string;
   fileContent: string; 
-  class_code: string;
+  class_code?: string;
 }
 
 export interface IUploadResourceResponse {

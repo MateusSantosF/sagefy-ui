@@ -7,7 +7,7 @@ import { DateRangePicker } from "@modules/dashboard/components/DateRangePicker";
 import { Card, CardContent } from "@shared/components/ui/card";
 import { ClassSummaryCards } from "@modules/dashboard/components/ClassSummaryCards";
 import { TokenEvolutionChart } from "@modules/dashboard/components/TokenEvolutionChart";
-import { InteractionsPieChart } from "@modules/dashboard/components/InteractionsPieChart";
+import { InteractionsBarChart } from "@modules/dashboard/components/InteractionsPieChart";
 import {
   Tabs,
   TabsContent,
@@ -24,6 +24,8 @@ import {
   IDashboardMetric,
 } from "@modules/dashboard/interfaces/IDashboard";
 import { DateRange } from "react-day-picker";
+import { Markdown } from "@shared/components/Markdown";
+import { formatDateInBrazil } from "@shared/utils/format-date";
 
 const fetchDashboardData = async () => {
   const response = await dashboardService.getMetrics();
@@ -165,10 +167,33 @@ export default function DashboardPage() {
                     <TokenEvolutionChart metrics={filteredMetrics} />
 
                     {/* 6. Interactions Pie Chart */}
-                    <InteractionsPieChart
+                    <InteractionsBarChart
                       metrics={dashboardData?.metrics}
                       onClassSelect={handleClassChange}
                     />
+                  </div>
+
+                  <div className="mt-8">
+                    <h3 className="text-xl font-semibold mb-4">
+                      Resumos Diários
+                    </h3>
+
+                    {filteredMetrics.map((metric) => (
+                      <Card
+                        key={metric.timestamp}
+                        className="mb-4 py-3 max-h-72 overflow-y-scroll"
+                      >
+                        <CardContent>
+                          <p className="text-sm text-gray-500 mb-2">
+                            <strong>Data:</strong>{" "}
+                            {formatDateInBrazil(metric.timestamp)}
+                          </p>
+                          <div className="pl-4">
+                            <Markdown>{metric.daily_summary}</Markdown>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
                   </div>
 
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">

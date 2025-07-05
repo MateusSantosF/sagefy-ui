@@ -1,8 +1,29 @@
 "use client";
 
 import { IClassMetric } from "@modules/dashboard/interfaces/IDashboard";
-import { Card, CardContent, CardHeader, CardTitle } from "@shared/components/ui/card";
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "recharts";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@shared/components/ui/card";
+import {
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+} from "recharts";
+
+
+
+interface InteractionsBarChartProps {
+  metrics: Record<string, IClassMetric[]> | undefined;
+  onClassSelect: (classCode: string) => void;
+}
 
 interface ChartData {
   name: string;
@@ -10,15 +31,10 @@ interface ChartData {
   classCode: string;
 }
 
-interface InteractionsPieChartProps {
-  metrics: Record<string, IClassMetric[]> | undefined;
-  onClassSelect: (classCode: string) => void;
-}
-
-export function InteractionsPieChart({
+export function InteractionsBarChart({
   metrics,
   onClassSelect,
-}: InteractionsPieChartProps) {
+}: InteractionsBarChartProps) {
   // Calcula o total de conversas por turma
   const chartData: ChartData[] = Object.entries(metrics ?? {})
     .map(([classCode, classMetrics]) => {
@@ -34,11 +50,11 @@ export function InteractionsPieChart({
     })
     .filter((item) => item.value > 0);
 
-  const COLORS = ["#3b82f6", "#10b981", "#8b5cf6", "#f59e0b", "#ef4444", "#ec4899"];
+  const COLORS = ["#3b82f6", "#10b981", "#8b5cf6", "#f59e0b", "#ef4444"];
 
-  const handlePieClick = (data: ChartData) => {
-    if (data && data.classCode) {
-      onClassSelect(data.classCode);
+  const handleBarClick = (data: any) => {
+    if (data && data.payload?.classCode) {
+      onClassSelect(data.payload.classCode);
     }
   };
 
@@ -50,28 +66,25 @@ export function InteractionsPieChart({
       <CardContent className="h-[300px]">
         {chartData.length > 0 ? (
           <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie
-                data={chartData}
-                cx="50%"
-                cy="50%"
-                outerRadius={80}
-                fill="#8884d8"
-                dataKey="value"
-                label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                onClick={handlePieClick}
-              >
-                {chartData.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
-                    style={{ cursor: "pointer" }}
-                  />
-                ))}
-              </Pie>
+            <BarChart
+              data={chartData}
+              margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+              onClick={handleBarClick}
+              layout="horizontal"
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+              <YAxis allowDecimals={false} />
+
               <Tooltip formatter={(value: number) => [`${value} conversas`, ""]} />
-              <Legend onClick={(data) => handlePieClick(data as ChartData)} />
-            </PieChart>
+              <Legend />
+              <Bar
+                dataKey="value"
+                name="Conversas"
+                fill={COLORS[0]}
+                cursor="pointer"
+              />
+            </BarChart>
           </ResponsiveContainer>
         ) : (
           <div className="flex h-full items-center justify-center">

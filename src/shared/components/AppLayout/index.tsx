@@ -9,6 +9,7 @@ import {
   Plus,
   Menu,
   BotIcon,
+  BookText,
 } from "lucide-react";
 import { useAuth } from "@shared/contexts/auth.context";
 import { Button } from "../ui/button";
@@ -61,12 +62,20 @@ export function AppLayout({ children }: LayoutProps) {
           </Button>
         </Link>
         {isADMIN && (
-          <Link href={`/teachers`} onClick={handleLinkClick}>
-            <Button variant="ghost" size="default" className="rounded-full">
-              <GraduationCap className="h-5 w-5" />
-              <span className="ml-2 md:hidden">Professores</span>
-            </Button>
-          </Link>
+          <>
+            <Link href={`/teachers`} onClick={handleLinkClick}>
+              <Button variant="ghost" size="default" className="rounded-full">
+                <GraduationCap className="h-5 w-5" />
+                <span className="ml-2 md:hidden">Professores</span>
+              </Button>
+            </Link>
+            <Link href={`/knowledge`} onClick={handleLinkClick}>
+              <Button variant="ghost" size="default" className="rounded-full">
+                <BookText className="h-5 w-5" />
+                <span className="ml-2 md:hidden">Conhecimento</span>
+              </Button>
+            </Link>
+          </>
         )}
         {isTeacher && (
           <Link href={`/classes`} onClick={handleLinkClick}>
@@ -122,22 +131,40 @@ export function AppLayout({ children }: LayoutProps) {
             </Tooltip>
 
             {isADMIN && (
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Link href={`/teachers`}>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="rounded-full"
-                    >
-                      <GraduationCap className="h-5 w-5" />
-                    </Button>
-                  </Link>
-                </TooltipTrigger>
-                <TooltipContent side="right">
-                  <p>Professores</p>
-                </TooltipContent>
-              </Tooltip>
+              <>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Link href={`/teachers`}>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="rounded-full"
+                      >
+                        <GraduationCap className="h-5 w-5" />
+                      </Button>
+                    </Link>
+                  </TooltipTrigger>
+                  <TooltipContent side="right">
+                    <p>Professores</p>
+                  </TooltipContent>
+                </Tooltip>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Link href={`/knowledge`}>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="rounded-full"
+                      >
+                        <BookText className="h-5 w-5" />
+                      </Button>
+                    </Link>
+                  </TooltipTrigger>
+                  <TooltipContent side="right">
+                    <p>Conhecimento</p>
+                  </TooltipContent>
+                </Tooltip>
+              </>
             )}
 
             {isTeacher && (

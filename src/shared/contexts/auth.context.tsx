@@ -14,6 +14,7 @@ import { env } from "@/configs/env";
 import { decodeJwt } from "../utils/decode-jwt";
 import { TToken } from "../interfaces/TToken";
 import { TUser } from "../interfaces/TUser";
+import { MESSAGES_LOCAL_STORAGE_KEY } from "@shared/hooks/useChatMessages";
 
 type TAuthProps = {
   children: ReactNode;
@@ -95,6 +96,8 @@ export const AuthProvider = ({ children }: TAuthProps) => {
     async (options: SignoutOptions = { redirect: true }) => {
       try {
         await axios.post("/api/auth/signout");
+        sessionStorage.removeItem(MESSAGES_LOCAL_STORAGE_KEY);
+
         setUser(null);
         if (options && options.redirect) {
           push("/");

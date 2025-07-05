@@ -6,7 +6,7 @@ import {
 } from "../interfaces/IKnowledge";
 
 export class KnowledgeService {
-  async getResources(classCode: string): Promise<IGetResourcesResponse> {
+  async getResources(classCode?: string): Promise<IGetResourcesResponse> {
     const response = await axiosWithInterceptor.get(`/files`, {
       params: { class_code: classCode },
     });

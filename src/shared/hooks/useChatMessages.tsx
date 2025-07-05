@@ -11,7 +11,7 @@ import { IMessage } from "../interfaces/Message";
 
 const MAX_MESSAGES = 180;
 const MIN_MESSAGES = 20;
-const LOCAL_STORAGE_KEY = "chatMessages";
+export const MESSAGES_LOCAL_STORAGE_KEY = "chatMessages";
 
 interface ChatMessagesContextType {
   messages: IMessage[];
@@ -31,7 +31,7 @@ export const ChatMessagesProvider = ({ children }: { children: ReactNode }) => {
   const [history, setHistory] = useState<IMessage[]>([]);
 
   useEffect(() => {
-    const savedMessages = sessionStorage.getItem(LOCAL_STORAGE_KEY);
+    const savedMessages = sessionStorage.getItem(MESSAGES_LOCAL_STORAGE_KEY);
     if (savedMessages) {
       const parsedMessages: IMessage[] = JSON.parse(savedMessages);
       setMessages(parsedMessages);
@@ -44,7 +44,7 @@ export const ChatMessagesProvider = ({ children }: { children: ReactNode }) => {
       const trimmedMessages = messages.slice(-MAX_MESSAGES);
       setMessages(trimmedMessages);
     } else {
-      sessionStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(messages));
+      sessionStorage.setItem(MESSAGES_LOCAL_STORAGE_KEY, JSON.stringify(messages));
     }
   }, [messages]);
 
@@ -73,7 +73,7 @@ export const ChatMessagesProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const clearMessages = () => {
-    sessionStorage.removeItem(LOCAL_STORAGE_KEY);
+    sessionStorage.removeItem(MESSAGES_LOCAL_STORAGE_KEY);
     setMessages([]);
   };
 
